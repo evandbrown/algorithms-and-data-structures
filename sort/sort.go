@@ -47,6 +47,24 @@ func BubbleSort(items []int) []int {
 	return items
 }
 
+func QuickSort(items []int) []int {
+	if len(items) <= 1 {
+		return items
+	}
+	pi := len(items) - 1
+	for i := 0; i < pi; i++ {
+		if items[i] > items[pi] {
+			items[pi-1], items[i] = items[i], items[pi-1]
+			items[pi-1], items[pi] = items[pi], items[pi-1]
+			pi--
+			i--
+		}
+	}
+	QuickSort(items[:pi])
+	QuickSort(items[pi:])
+	return items
+}
+
 func BinFind(key int, items []int) (int, error) {
 	low, high := 0, len(items)-1
 	var mid int
