@@ -6,19 +6,6 @@ import (
 
 func InsertSort(items []int) []int {
 	for i := 1; i < len(items); i++ {
-		t := i
-		for j := i - 1; j >= 0 && t > j; j-- {
-			if items[t] < items[j] {
-				items[t], items[j] = items[j], items[t]
-				t--
-			}
-		}
-	}
-	return items
-}
-
-func InsertSortNoSwap(items []int) []int {
-	for i := 1; i < len(items); i++ {
 		t, j := items[i], 0
 		for j = i - 1; j >= 0 && t < items[j]; j-- {
 			items[j+1] = items[j]
@@ -28,15 +15,36 @@ func InsertSortNoSwap(items []int) []int {
 	return items
 }
 
+func InsertSortNew(items []int) []int {
+	for i := 1; i < len(items); i++ {
+		t, j := items[i], i-1
+		for ; j >= 0 && t < items[j]; j-- {
+			items[j+1] = items[j]
+		}
+		items[j+1] = t
+	}
+	return items
+}
+
+func SelectionSort(items []int) []int {
+	for i := 0; i < len(items)-1; i++ {
+		li := i
+		for j := i + 1; j < len(items); j++ {
+			if items[j] < items[li] {
+				li = j
+			}
+		}
+		items[i], items[li] = items[li], items[i]
+	}
+	return items
+}
+
 func BubbleSort(items []int) []int {
-	var s int
 	f := false
 
 	for i := 0; i < len(items)-1; i++ {
 		if items[i] > items[i+1] {
-			s = items[i]
-			items[i] = items[i+1]
-			items[i+1] = s
+			items[i], items[i+1] = items[i+1], items[i]
 			f = true
 		}
 		if i == len(items)-2 && f == true {

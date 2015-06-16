@@ -7,25 +7,25 @@ import (
 )
 
 func TestInsertSort(t *testing.T) {
-	items := getList(5000, 5000)
+	items := getList(50000, 50000)
 	items[100] = 0
-	items = InsertSort(items)
+	items = InsertSortNew(items)
 	if items[0] != 0 {
 		t.Error("Expected 0 as first value", items[0])
 	}
 }
 
-func TestInsertSortNoSwap(t *testing.T) {
+func TestSelectionSort(t *testing.T) {
 	items := getList(50000, 50000)
 	items[100] = 0
-	items = InsertSortNoSwap(items)
+	items = SelectionSort(items)
 	if items[0] != 0 {
 		t.Error("Expected 0 as first value", items[0])
 	}
 }
 
 func TestBubbleSort(t *testing.T) {
-	items := getList(5000, 5000)
+	items := getList(50000, 50000)
 	items[100] = 0
 	items = BubbleSort(items)
 	if items[0] != 0 {
@@ -34,19 +34,18 @@ func TestBubbleSort(t *testing.T) {
 }
 
 func TestQuickSort(t *testing.T) {
-	items := getList(50000000, 5000000000)
+	items := getList(50000, 50000)
 	items[40] = 0
 	items = QuickSort(items)
-	t.Logf("%v...%v\n", items[:10], items[len(items)-10:])
 	if items[0] != 0 {
 		t.Error("Expected 0 as first value", items[0])
 	}
 }
 
 func TestBinFind(t *testing.T) {
-	items := getList(5000, 5000)
+	items := getList(500000, 500000)
 	items[100] = 4997
-	items = InsertSortNoSwap(items)
+	items = QuickSort(items)
 	i, err := BinFind(4997, items)
 	t.Logf("Find returned index %v\n", i)
 	if err != nil {
