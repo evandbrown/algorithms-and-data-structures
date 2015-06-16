@@ -65,3 +65,33 @@ func TestInsert(t *testing.T) {
 		t.Error("Expected error when trying to pop from empty heap")
 	}
 }
+
+func TestMaxLevel(t *testing.T) {
+	h := new(Heap)
+
+	h.Insert(400)
+	if h.MaxLevel() != 0 {
+		t.Error("Expected MaxLevel of heap to be 0", h.MaxLevel())
+	}
+	h.Insert(100)
+	if h.MaxLevel() != 1 {
+		t.Error("Expected MaxLevel of heap to be 1", h.MaxLevel())
+	}
+	h.Insert(5)
+	if h.MaxLevel() != 1 {
+		t.Error("Expected MaxLevel of heap to be 1", h.MaxLevel())
+	}
+	h.Insert(500)
+	h.Insert(200)
+	h.Insert(9)
+
+	if h.MaxLevel() != 2 {
+		t.Error("Expected MaxLevel of heap to be 2", h.MaxLevel())
+	}
+
+	h.Insert(400)
+	h.Insert(100)
+	if h.MaxLevel() != 3 {
+		t.Error("Expected MaxLevel of heap to be 3", h.MaxLevel())
+	}
+}

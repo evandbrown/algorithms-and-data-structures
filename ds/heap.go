@@ -2,6 +2,7 @@ package ds
 
 import (
 	"errors"
+	"math"
 )
 
 type Heap struct {
@@ -30,6 +31,10 @@ func (h *Heap) Insert(val int) {
 	h.data = append(h.data, val)
 	i := len(h.data) - 1
 	h.swapUp(i)
+}
+
+func (h *Heap) MaxLevel() int {
+	return h.level(len(h.data) - 1)
 }
 
 func (h *Heap) swapUp(i int) {
@@ -87,4 +92,12 @@ func (h *Heap) right(i int) int {
 	} else {
 		return li
 	}
+}
+
+func (h *Heap) level(i int) int {
+	if i == 0 {
+		return 0
+	}
+
+	return int(math.Log(float64(i+1)) / math.Log(2))
 }
