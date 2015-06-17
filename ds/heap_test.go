@@ -1,7 +1,9 @@
 package ds
 
 import (
+	"math/rand"
 	"testing"
+	"time"
 )
 
 func TestEmpty(t *testing.T) {
@@ -66,32 +68,47 @@ func TestInsert(t *testing.T) {
 	}
 }
 
-func TestMaxLevel(t *testing.T) {
+func TestmaxLevel(t *testing.T) {
 	h := new(Heap)
 
 	h.Insert(400)
-	if h.MaxLevel() != 0 {
-		t.Error("Expected MaxLevel of heap to be 0", h.MaxLevel())
+	if h.maxLevel() != 0 {
+		t.Error("Expected maxLevel of heap to be 0", h.maxLevel())
 	}
 	h.Insert(100)
-	if h.MaxLevel() != 1 {
-		t.Error("Expected MaxLevel of heap to be 1", h.MaxLevel())
+	if h.maxLevel() != 1 {
+		t.Error("Expected maxLevel of heap to be 1", h.maxLevel())
 	}
 	h.Insert(5)
-	if h.MaxLevel() != 1 {
-		t.Error("Expected MaxLevel of heap to be 1", h.MaxLevel())
+	if h.maxLevel() != 1 {
+		t.Error("Expected maxLevel of heap to be 1", h.maxLevel())
 	}
 	h.Insert(500)
 	h.Insert(200)
 	h.Insert(9)
 
-	if h.MaxLevel() != 2 {
-		t.Error("Expected MaxLevel of heap to be 2", h.MaxLevel())
+	if h.maxLevel() != 2 {
+		t.Error("Expected maxLevel of heap to be 2", h.maxLevel())
 	}
 
 	h.Insert(400)
 	h.Insert(100)
-	if h.MaxLevel() != 3 {
-		t.Error("Expected MaxLevel of heap to be 3", h.MaxLevel())
+	if h.maxLevel() != 3 {
+		t.Error("Expected maxLevel of heap to be 3", h.maxLevel())
 	}
+}
+
+func TestPrint(t *testing.T) {
+	h := randomHeap(120)
+
+	t.Logf("%v\n", h.String())
+}
+
+func randomHeap(size int) *Heap {
+	h := new(Heap)
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i < size; i++ {
+		h.Insert(r.Intn(size))
+	}
+	return h
 }

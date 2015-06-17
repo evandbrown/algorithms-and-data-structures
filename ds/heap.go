@@ -1,8 +1,11 @@
 package ds
 
 import (
+	"bytes"
 	"errors"
+	"fmt"
 	"math"
+	"strconv"
 )
 
 type Heap struct {
@@ -27,13 +30,57 @@ func (h *Heap) Pop() (int, error) {
 	return item, nil
 }
 
+func (h *Heap) Peek() (int, error) {
+	if len(h.data) == 0 {
+		return 0, errors.New("Heap is empty")
+	}
+
+	return h.data[0], nil
+}
+
 func (h *Heap) Insert(val int) {
 	h.data = append(h.data, val)
 	i := len(h.data) - 1
 	h.swapUp(i)
 }
 
-func (h *Heap) MaxLevel() int {
+func (h *Heap) String() string {
+	if len(h.data) == 0 {
+		return ""
+	} else {
+		l := h.levelMap()
+		var b bytes.Buffer
+		b.WriteString("\n")
+		maxval, _ := h.Peek()
+		maxchar := len(strconv.Itoa(maxval)) + 2
+		maxlevel := h.maxLevel()
+		maxrowlen := int(float64(maxchar) * math.Exp2(float64(maxlevel)))
+		for i := 0; i <= maxlevel; i++ {
+			for _, v := range l[i] {
+				pad := (maxrowlen - maxchar*int(math.Exp2(float64(i)))) / int(math.Exp2(float64(i))) / 2
+				fmt.Printf("Padding is %v\n", pad)
+				b.WriteString(fmt.Sprintf("%"+strconv.Itoa(pad)+"v", " "))
+				b.WriteString(fmt.Sprintf("%"+strconv.Itoa(maxchar)+"s", strconv.Itoa(v)))
+				b.WriteString(fmt.Sprintf("%"+strconv.Itoa(pad)+"v", " "))
+			}
+			b.WriteString("\n")
+		}
+		return b.String()
+	}
+}
+
+func (h *Heap) levelMap() map[int][]int {
+	// Map of int -> []int
+	l := make(map[int][]int)
+
+	for i, v := range h.data {
+		l[h.level(i)] = append(l[h.level(i)], v)
+	}
+
+	return l
+}
+
+func (h *Heap) maxLevel() int {
 	return h.level(len(h.data) - 1)
 }
 
