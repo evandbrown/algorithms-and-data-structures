@@ -99,7 +99,7 @@ func TestmaxLevel(t *testing.T) {
 }
 
 func TestPrint(t *testing.T) {
-	h := randomHeap(120)
+	h := randomHeap(31)
 
 	t.Logf("%v\n", h.String())
 }

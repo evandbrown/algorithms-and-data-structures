@@ -57,11 +57,11 @@ func (h *Heap) String() string {
 		maxrowlen := int(float64(maxchar) * math.Exp2(float64(maxlevel)))
 		for i := 0; i <= maxlevel; i++ {
 			for _, v := range l[i] {
-				pad := (maxrowlen - maxchar*int(math.Exp2(float64(i)))) / int(math.Exp2(float64(i))) / 2
-				fmt.Printf("Padding is %v\n", pad)
-				b.WriteString(fmt.Sprintf("%"+strconv.Itoa(pad)+"v", " "))
-				b.WriteString(fmt.Sprintf("%"+strconv.Itoa(maxchar)+"s", strconv.Itoa(v)))
-				b.WriteString(fmt.Sprintf("%"+strconv.Itoa(pad)+"v", " "))
+				pad := maxrowlen / int(math.Exp2(float64(i)))
+				lpad := pad / 2
+				rpad := pad - lpad
+				b.WriteString(fmt.Sprintf("%"+strconv.Itoa(lpad)+"s", strconv.Itoa(v)))
+				b.WriteString(fmt.Sprintf("%"+strconv.Itoa(rpad)+"s", ""))
 			}
 			b.WriteString("\n")
 		}
