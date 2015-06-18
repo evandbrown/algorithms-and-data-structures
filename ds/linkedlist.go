@@ -23,7 +23,10 @@ type LinkedList struct {
 func (l *LinkedList) String() string {
 	var s string
 	for ; l != nil; l = l.next {
-		s += fmt.Sprintf("%v-", l.data)
+		s += fmt.Sprintf("%v", l.data)
+		if l.next != nil {
+			s += fmt.Sprintf("-")
+		}
 	}
 	return s
 }
