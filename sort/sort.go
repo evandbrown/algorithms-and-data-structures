@@ -2,6 +2,7 @@ package sort
 
 import (
 	"errors"
+	"fmt"
 )
 
 func InsertSort(items []int) []int {
@@ -73,7 +74,23 @@ func QuickSort(items []int) []int {
 	return items
 }
 
-func BinFind(key int, items []int) (int, error) {
+func BinFind(val int, items []int) (int, error) {
+	if len(items) == 0 {
+		return -1, errors.New("array is empty")
+	}
+	for mid := items[len(items)/2]; ; mid = items[len(items)/2] {
+		if mid == val {
+			return len(items) / 2, nil
+		} else if mid < val {
+			items = items[len(items)/2:]
+		} else {
+			items = items[:len(items)/2]
+		}
+	}
+	return -1, errors.New("could not find value in array")
+}
+
+func _BinFind(key int, items []int) (int, error) {
 	low, high := 0, len(items)-1
 	var mid int
 	for low <= high {

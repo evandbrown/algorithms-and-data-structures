@@ -1,6 +1,7 @@
 package sort
 
 import (
+	"fmt"
 	"math/rand"
 	"testing"
 	"time"
@@ -25,7 +26,7 @@ func TestSelectionSort(t *testing.T) {
 }
 
 func TestBubbleSort(t *testing.T) {
-	items := getList(50000, 50000)
+	items := getList(500, 500)
 	items[100] = 0
 	items = BubbleSort(items)
 	if items[0] != 0 {
@@ -43,13 +44,14 @@ func TestQuickSort(t *testing.T) {
 }
 
 func TestBinFind(t *testing.T) {
-	items := getList(500000, 500000)
-	items[100] = 4997
+	items := getList(150, 150)
+	toFind := -1
+	items[100] = toFind
 	items = QuickSort(items)
-	i, err := BinFind(4997, items)
-	t.Logf("Find returned index %v\n", i)
+	i, err := BinFind(toFind, items)
+	t.Logf("Find returned index %v and error %v\n", i, err)
 	if err != nil {
-		t.Error("Expected to find 4997 and for error to be nil")
+		t.Error(fmt.Sprintf("Expected to find %v and for error to be nil", toFind))
 	}
 }
 
